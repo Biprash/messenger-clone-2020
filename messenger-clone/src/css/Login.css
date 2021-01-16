@@ -1,0 +1,55 @@
+.login {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.login > img {
+    width: 15%;
+}
+
+.login>h1 {
+    color: rgb(49, 46, 46);
+    margin: 10px 0;
+    font-size: 50px;
+}
+
+.login>p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.login > form {
+    display: flex;
+    flex-direction: column;
+}
+
+form>input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    margin: 10px 0;
+    flex: 1;
+}
+
+.signin {
+    color: white;
+    background-color: rgb(62, 152, 255);
+}
+
+.facebooksignin {
+    color: white;
+    background-color: rgb(250, 98, 217);
+    border: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin: 10px 0;
+    flex: 1;
+}

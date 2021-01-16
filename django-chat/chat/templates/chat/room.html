@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django chat - Room</title>
+</head>
+
+<body>
+    <textarea id="chat-log" cols="100" rows="20"></textarea><br />
+    <input id="chat-message-input" type="text" size="100" /><br />
+    <input id="chat-message-submit" type="button" value="Send" />
+
+    <script>
+        var roomName = {{ room_name_json }};
+
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/' + roomName + '/');
+
+        chatSocket.onopen = function (e) {
+            chatSocket.send(JSON.stringify({
+                'command': 'fetch_messages',
+                'groupName': roomName,
+            }));
+        }
+
+        chatSocket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            switch (data['command']) {
+                case 'fetch_messages':
+                    var messages = data['messages'];
+                    messages.forEach(message => {
+                        document.querySelector('#chat-log').value += (message.message + '\n');
+                    });
+                    break
+
+                case 'new_message':
+                    var message = data['message'];
+                    document.querySelector('#chat-log').value += (message + '\n');
+                    break
+                default:
+                    break
+            }
+        };
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function (e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function (e) {
+            var messageInputDom = document.querySelector('#chat-message-input');
+            var message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'command': 'new_message',
+                'message': message,
+                'from': '{{request.user.username}}',
+                'groupName': roomName,
+            }));
+
+            messageInputDom.value = '';
+        };
+    </script>
+
+</body>
+
+</html>

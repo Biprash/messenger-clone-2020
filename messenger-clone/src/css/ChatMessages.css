@@ -1,0 +1,106 @@
+.chatmessages {
+    overflow-y: hidden;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.chatmessages:hover {
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.received {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.received > .MuiAvatar-root {
+    height: 28px;
+    width: 28px;
+}
+
+.received__messages{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.received__message {
+    display: flex;
+    flex-direction: row;
+    margin: 1px 0;
+    align-items: center;
+}
+
+.received__text {
+    font-size: 15px;
+    background-color: 	#F0F0F0;
+    padding: 6px 12px 7px;
+    border-radius: 20px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin-right: 5px;
+    white-space: pre-wrap;
+}
+
+.received__icons > .MuiSvgIcon-root, .sent__icons > .MuiSvgIcon-root {
+    height: 22px;
+    width: 22px;
+    color: lightgray;
+    padding: 5px;
+    cursor: pointer;
+    margin-right: 2px;
+}
+
+.received__icons > .MuiSvgIcon-root:hover, .sent__icons > .MuiSvgIcon-root:hover {
+    color: black;
+    background-color: 	#F5F5F5;
+    border-radius: 22px;
+}
+
+.received__icons {
+    display: flex;
+    flex-direction: row;
+    margin-right: 2px;
+    visibility: hidden;
+}
+
+.received__message:hover > .received__icons, .sent__message:hover > .sent__icons {
+    visibility: visible;
+}
+
+.sent {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.sent__message {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 1px 0;
+    align-items: center;
+}
+
+.sent__text {
+    font-size: 15px;
+    background-color: 	#0099FF;
+    padding: 6px 12px 7px;
+    border-radius: 20px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    margin-left: 5px;
+    color: white;
+    white-space: pre-wrap;
+}
+
+.sent__icons {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-left: 2px;
+    visibility: hidden;
+}

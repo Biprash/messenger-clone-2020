@@ -1,0 +1,12 @@
+.App {
+  display: flex;
+}
+
+.main_content {
+  width: 75%;
+}
+
+.chat__area {
+  display: flex;
+  border-top: 1px solid lightgray;
+}

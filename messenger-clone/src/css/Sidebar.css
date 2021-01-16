@@ -1,0 +1,42 @@
+.sidebar {
+    width: 25%;
+    border-right: 1px solid LightGray;
+    height: 100vh;
+}
+
+.sidebar__header {
+    display: flex;
+    /* height: 60px; */
+    max-height: 60px;
+    padding: 10px 15px;
+    align-items: center;
+}
+
+.sidebar__header > .MuiAvatar-root {
+    margin: 0;
+    margin-right: 5px;
+}
+
+.sidebar__header > h2 {
+    display: inline;
+}
+
+.sidebar__title {
+    height: 40px;
+}
+
+.sidebar__gap {
+    flex: 1;
+}
+
+.sidebar__options {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.sidebar__options > .MuiSvgIcon-root {
+    width: 30px;
+    height: 30px;
+    padding: 5px 10px;
+}

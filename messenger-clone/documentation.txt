@@ -1,0 +1,26 @@
+This is a documentation that I prepared for myself to help me. 
+
+
+Refrences:
+
+1. Get the size of the screen, current web page and browser window
+- https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+
+2. ReactJS - Add custom event listener to component
+- https://stackoverflow.com/questions/36180414/reactjs-add-custom-event-listener-to-component
+
+3. Advance(Top) level animation in React
+- https://www.npmjs.com/package/react-flip-toolkit
+
+4. Real time notification
+- https://stackoverflow.com/questions/1086380/how-does-facebook-gmail-send-the-real-time-notification/1086448
+
+5. For video, audio, voice call or services
+- https://webrtc.org/getting-started/overview
+
+6. Database Scheme for private and group chat
+- https://stackoverflow.com/questions/39810106/storing-messages-of-different-chats-in-a-single-database-table
+- https://stackoverflow.com/questions/46484989/database-schema-for-chat-private-and-group
+
+
+

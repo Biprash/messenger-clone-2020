@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact</title>
+</head>
+
+<body>
+    <h1>Friends</h1>
+    <ol>
+        {%for friend in friends%}
+        <li>{{friend.user.username}} with {{friend.friend.username}} and {{friend.group.name}}<span><a
+                    href="{% url 'chat:addcontact' friend.pk %}">Add</a> <a href="">Remove</a></span></span></li>
+        {%endfor%}
+    </ol>
+    <br />
+    <h1>Contact</h1>
+    <ol>
+        {%for user in contact%}
+        <li>{{user.username}}<span><a href="{% url 'chat:addcontact' user.pk %}">Add</a></span></li>
+        {%endfor%}<span></li>
+    </ol>
+</body>
+
+</html>

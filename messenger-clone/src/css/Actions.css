@@ -1,0 +1,86 @@
+.actions {
+    flex: 1;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.actions:hover {
+    overflow-y: scroll;
+}
+
+.actions__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 16px;
+}
+
+.actions__info > .MuiAvatar-root {
+    width: 100px;
+    height: 100px;
+}
+
+.actions__username {
+    margin-top: 12px;
+    font-size: 20px;
+}
+
+.actions__username:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.actions .MuiSvgIcon-root {
+    height: 22px;
+    width: 22px;
+    padding: 10px;
+}
+
+.actions__moreactions, .actions__privacy {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid lightgray;
+}
+
+.actions__header, .actions__items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.actions__headertext, .actions__text {
+    flex: 1;
+    font-size: 14px;
+}
+
+.actions__header {
+    padding: 14px;
+}
+
+.actions__header:hover,.actions__header:hover > .actions__headertext ,.actions__header:hover > .MuiSvgIcon-root {
+    background-color: 	#F0F0F0;
+    cursor: pointer;
+}
+
+.actions__header > .MuiSvgIcon-root {
+    height: 22px;
+    width: 22px;
+    padding: 0;
+}
+
+.blueicon > .MuiSvgIcon-root {
+    color: #0099FF;
+}
+
+.actions__headertext {
+    color: #A9A9A9;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.actions__items {
+    padding: 0 14px;
+    cursor: pointer;
+}
