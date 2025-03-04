@@ -1,14 +1,15 @@
-import React from 'react'
 import Actions from '../components/Actions'
 import Chat from '../components/Chat'
 import ContentHeader from '../components/ContentHeader'
 import Sidebar from '../components/Sidebar'
 import { useAuthValue } from '../store/AuthProvider'
+import { useLocation } from 'react-router-dom'
 
-function Home(props) {
-    const user = props.history.location.detail
+function Home() {
+    const location = useLocation();
+    const user = location.state?.user; // Ensure safe access
+    // const user = props.history.location.detail
     const [{ username, token }] = useAuthValue()
-    console.log(props, 'home props');
     return (
         <>
             <Sidebar />

@@ -2,9 +2,10 @@ import { SOCKET_URL } from './settings'
 
 class WebsocketService {
 
-    static instance = null
+    static instance: WebsocketService | null = null
+    socketRef: WebSocket | null = null;
 
-    callbacks = {}
+    callbacks: any = {}
 
     static getInstance() {
         if (!WebsocketService.instance) {
@@ -17,18 +18,18 @@ class WebsocketService {
         this.socketRef = null
     }
 
-    connect(chatUrl = 'admin_user1',token) {
+    connect(chatUrl: string = 'admin_user1', token: string) {
         const path = `${SOCKET_URL}/ws/chat/${chatUrl}/${token}/`
         console.log(path);
         this.socketRef = new WebSocket(path)
         this.socketRef.onopen = () => {
 
         }
-        this.socketRef.onmessage = e => {
+        this.socketRef.onmessage = (e: MessageEvent) => {
             this.socketNewMessage(e.data)
         }
-        this.socketRef.onerror = e => {
-            console.error(e.message);
+        this.socketRef.onerror = (e: Event) => {
+            console.error((e as ErrorEvent)?.message);
         }
         this.socketRef.onclose = () => {
             console.error('Chat socket closed unexpectedly');
@@ -36,10 +37,10 @@ class WebsocketService {
     }
 
     disconnect() {
-        this.socketRef.close()
+        this.socketRef?.close()
     }
 
-    socketNewMessage(data) {
+    socketNewMessage(data: any) {
         const ParsedData = JSON.parse(data);
         const command = ParsedData.command
         if (Object.keys(this.callbacks).length === 0) {
@@ -53,7 +54,7 @@ class WebsocketService {
         }
     }
 
-    fetchMessages(username, roomName) {
+    fetchMessages(username: string, roomName: string) {
         this.sendMessage({
             command: 'fetch_messages',
             username: username,
@@ -61,7 +62,7 @@ class WebsocketService {
         })
     }
 
-    newChatMessage(message, username, roomName) {
+    newChatMessage(message: string, username: string, roomName: string) {
         this.sendMessage({
             command: 'new_message',
             message: message,
@@ -70,21 +71,21 @@ class WebsocketService {
         })
     }
 
-    addCallbacks(messagesCallback, newMessageCallback) {
+    addCallbacks(messagesCallback: (message: any) => void, newMessageCallback: (message: any) => void) {
         this.callbacks['messages'] = messagesCallback;
         this.callbacks['new_message'] = newMessageCallback;
     }
 
-    sendMessage(data) {
+    sendMessage(data: any) {
         try {
-            this.socketRef.send(JSON.stringify(data))
+            this.socketRef?.send(JSON.stringify(data))
         } catch (err) {
-            console.log(err.message)
+            console.log((err as Error)?.message)
         }
     }
 
     state() {
-        return this.socketRef.readyState
+        return this.socketRef?.readyState
     }
 }
 

@@ -1,23 +1,22 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
-import ChatList from './components/ChatList'
+import { Route, Routes } from 'react-router-dom'
 import Login from './components/Login'
 import Home from './containers/Home'
 import { useAuthValue } from './store/AuthProvider'
+import ChatList from './components/ChatList'
 
 const BaseRouter = () => {
     const [{ token, username }] = useAuthValue()
     return (
-        <>
+        <Routes>
             {token && username ?
                 <>
-                    <Route exact path='/' component={ChatList} />
-                    <Route path='/:groupID/' component={Home} />
+                    <Route path='/' element={<ChatList />} />
+                    <Route path='/:groupID/' element={<Home />} />
                 </>
                 :
-                <Route path='/' component={Login} />
+                <Route path='/' element={<Login />} />
             }
-        </>
+        </Routes>
     )
 }
 

@@ -8,7 +8,7 @@ export const authStart = () => {
     }
 }
 
-export const authSuccess = (username, token) => {
+export const authSuccess = (username: string, token: string) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         username: username,
@@ -16,7 +16,7 @@ export const authSuccess = (username, token) => {
     }
 }
 
-export const authFail = (error) => {
+export const authFail = (error: any) => {
     return {
         type: actionTypes.AUTH_FAIL,
         error: error,
@@ -31,14 +31,14 @@ export const logout = () => {
     }
 }
 
-export const authUser = (user) => {
+export const authUser = (user: any) => {
     return {
         type: actionTypes.AUTH_USER,
         user: user,
     }
 }
 
-export const authLogin = (dispatch, username, password) => {
+export const authLogin = (dispatch: any, username: string, password: string) => {
     dispatch(authStart())
     axios.post(`${SERVER_URL}/rest-auth/login/`, {
         username: username,
@@ -90,7 +90,7 @@ export const authLogin = (dispatch, username, password) => {
 //     }
 // }
 
-export const getUser = (dispatch, username, token) => {
+export const getUser = (dispatch: any, username: string, token: string) => {
     axios.post(`${SERVER_URL}/chat/api/getuser/`, {
         username: username,
     })

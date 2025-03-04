@@ -1,17 +1,22 @@
-import React, { Component } from 'react'
+import { Component, FormEvent } from 'react'
 import '../css/Chat.css';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import GifIcon from '@material-ui/icons/Gif';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
-import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import { AddCircle, Gif, InsertDriveFile, ImageOutlined, EmojiEmotions, ThumbUp } from '@mui/icons-material'
 import ChatMessages from './ChatMessages';
 
 import WebSocketInstance from '../websocket'
 
-class Chat extends Component {
-    constructor(props) {
+interface ActionProps {
+    user: any,
+    username: string,
+    token: string
+}
+interface ActionState {
+    message: string
+    messages: any
+}
+
+class Chat extends Component<ActionProps, ActionState> {
+    constructor(props: ActionProps) {
         super(props)
 
         this.state = {
@@ -27,16 +32,17 @@ class Chat extends Component {
 
     initialiseChat() {
         this.waitForSocketConnection(() => {
+            let x = this.addMessage.bind(this)
             WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
             WebSocketInstance.fetchMessages(
                 this.props.username,
                 this.props.user.group_name
             )
         })
-        WebSocketInstance.connect(this.props.user.group_name,this.props.token)
+        WebSocketInstance.connect(this.props.user.group_name, this.props.token)
     }
 
-    waitForSocketConnection(callback) {
+    waitForSocketConnection(callback: () => void) {
         const component = this
         setTimeout(
             () => {
@@ -52,7 +58,7 @@ class Chat extends Component {
         )
     }
 
-    componentWillReceiveProps(newProps) {
+    componentDidUpdate(newProps: ActionProps) {
         if (this.props.user.group_name !== newProps.user.group_name) {
             // console.log(newProps, 'newprops')
             WebSocketInstance.disconnect()
@@ -66,21 +72,21 @@ class Chat extends Component {
         }
     }
 
-    setMessages(messages) {
+    setMessages(messages: any[]) {
         this.setState({
             messages: messages.reverse()
         })
         // console.log(messages, 'messages')
     }
 
-    addMessage(message) {
+    addMessage(message: any) {
         this.setState({
             messages: [...this.state.messages, message]
         })
         // console.log(message, 'new message')
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         // some backend stuff
@@ -98,22 +104,22 @@ class Chat extends Component {
                 <ChatMessages messages={messages} user={this.props.user} />
                 <div className="chat__sender">
                     <div className="chat__sender__left">
-                        <AddCircleIcon />
+                        <AddCircle />
                         <span className="chat__sender__invisible">
-                            <GifIcon />
-                            <InsertDriveFileIcon />
-                            <ImageOutlinedIcon />
+                            <Gif />
+                            <InsertDriveFile />
+                            <ImageOutlined />
                         </span>
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <div className="chat__sender__center">
                             <input value={this.state.message} onChange={(e) => this.setState({ message: e.target.value })} type="text" name="message" placeholder="Type a message..." id="" />
                             <button type="submit" className="form__button">Send</button>
-                            <EmojiEmotionsIcon />
+                            <EmojiEmotions />
                         </div>
                     </form>
                     <div className="chat__sender__right">
-                        <ThumbUpIcon />
+                        <ThumbUp />
                     </div>
                 </div>
             </div>

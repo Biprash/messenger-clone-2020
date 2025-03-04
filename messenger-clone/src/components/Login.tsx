@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import '../css/Login.css'
 import * as actions from '../store/actions/auth'
 import { useAuthValue } from '../store/AuthProvider'
-import { useHistory } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-function Login() {
-
+function Login () {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [state, dispatch] = useAuthValue()
-    const history = useHistory()
+    const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
-        if (history.location !== '/') {
-            history.push('/')
+        if (location.pathname !== '/') {
+            navigate('/')
         }
 
     }, [])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         actions.authLogin(dispatch, username, password)
         setUsername('')

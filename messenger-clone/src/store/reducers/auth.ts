@@ -1,22 +1,30 @@
 import * as actionTypes from '../actions/actionsTypes'
 import { updateObject } from '../utility'
 
-export const initialState = {
+interface InitialState {
+    user: any
+    token: string
+    username: string
+    error: any
+    loading: boolean
+} 
+
+export const initialState: InitialState = {
     user: null,
-    token: null,
-    username: null,
+    token: '',
+    username: '',
     error: null,
     loading: false
 }
 
-const authStart = (state, action) => {
+const authStart = (state: InitialState, action: any) => {
     return updateObject(state, {
         error: null,
         loading: true
     })
 }
 
-const authSuccess = (state, action) => {
+const authSuccess = (state: InitialState, action: any) => {
     return updateObject(state, {
         error: null,
         token: action.token,
@@ -25,14 +33,14 @@ const authSuccess = (state, action) => {
     })
 }
 
-const authFail = (state, action) => {
+const authFail = (state: InitialState, action: any) => {
     return updateObject(state, {
         error: action.error,
         loading: false
     })
 }
 
-const authLogout = (state, action) => {
+const authLogout = (state: InitialState, action: any) => {
     return updateObject(state, {
         user: null,
         error: null,
@@ -42,13 +50,13 @@ const authLogout = (state, action) => {
     })
 }
 
-const authUser = (state, action) => {
+const authUser = (state: InitialState, action: any) => {
     return updateObject(state, {
         user: action.user
     })
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: any) => {
     switch (action.type) {
         case actionTypes.AUTH_START:
             return authStart(state, action)

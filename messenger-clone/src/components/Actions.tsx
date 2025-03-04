@@ -1,20 +1,30 @@
-import { Avatar } from '@material-ui/core';
-import React, { Component } from 'react'
-import '../css/Actions.css';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import SearchIcon from '@material-ui/icons/Search';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
-import RadioButtonCheckedOutlinedIcon from '@material-ui/icons/RadioButtonCheckedOutlined';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import NotInterestedIcon from '@material-ui/icons/NotInterested';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
+import { Component } from 'react'
+import { Avatar } from '@mui/material';
+import {
+  ArrowBackIos,
+  ExpandMore,
+  Search,
+  BorderColor,
+  RadioButtonCheckedOutlined,
+  ThumbUp,
+  Notifications,
+  NotInterested,
+  RemoveCircle,
+  WarningRounded,
+} from "@mui/icons-material";
 import { SERVER_URL } from '../settings';
+import '../css/Actions.css';
 
-class Actions extends Component {
-    constructor(props) {
+interface ActionProps {
+    user: any
+}
+interface ActionState {
+    isOpenMoreActions: boolean
+    isOpenPrivacy: boolean
+}
+
+class Actions extends Component<ActionProps, ActionState> {
+    constructor(props: ActionProps) {
         super(props)
 
         this.state = {
@@ -36,25 +46,25 @@ class Actions extends Component {
                 <div className="actions__moreactions">
                     <div className="actions__header" onClick={() => { this.setState({ isOpenMoreActions: !this.state.isOpenMoreActions }) }} >
                         <span className="actions__headertext">More Actions</span>
-                        {this.state.isOpenMoreActions ? <ExpandMoreIcon /> : <ArrowBackIosIcon />}
+                        {this.state.isOpenMoreActions ? <ExpandMore /> : <ArrowBackIos />}
                     </div>
                     {this.state.isOpenMoreActions ?
                         <>
                             <div className="actions__items">
                                 <div className="actions__text">Search in conversation</div>
-                                <SearchIcon />
+                                <Search />
                             </div>
                             <div className="actions__items">
                                 <div className="actions__text">Edit nicknames</div>
-                                <BorderColorIcon />
+                                <BorderColor />
                             </div>
                             <div className="actions__items blueicon">
                                 <div className="actions__text">Change theme</div>
-                                <RadioButtonCheckedOutlinedIcon />
+                                <RadioButtonCheckedOutlined />
                             </div>
                             <div className="actions__items blueicon">
                                 <div className="actions__text">Change Emoji</div>
-                                <ThumbUpIcon />
+                                <ThumbUp />
                             </div>
                         </>
                         : null}
@@ -63,25 +73,25 @@ class Actions extends Component {
                 <div className="actions__privacy">
                     <div className="actions__header" onClick={() => { this.setState({ isOpenPrivacy: !this.state.isOpenPrivacy }) }} >
                         <span className="actions__headertext">Privacy and support</span>
-                        {this.state.isOpenPrivacy ? <ExpandMoreIcon /> : <ArrowBackIosIcon />}
+                        {this.state.isOpenPrivacy ? <ExpandMore /> : <ArrowBackIos />}
                     </div>
                     {this.state.isOpenPrivacy ?
                         <>
                             <div className="actions__items">
                                 <div className="actions__text">Notification</div>
-                                <NotificationsIcon />
+                                <Notifications />
                             </div>
                             <div className="actions__items">
                                 <div className="actions__text">Ignore messages</div>
-                                <NotInterestedIcon />
+                                <NotInterested />
                             </div>
                             <div className="actions__items">
                                 <div className="actions__text">Block messages</div>
-                                <RemoveCircleIcon />
+                                <RemoveCircle />
                             </div>
                             <div className="actions__items">
                                 <div className="actions__text">Something's wrong</div>
-                                <WarningRoundedIcon />
+                                <WarningRounded />
                             </div>
                         </>
                         : null}
