@@ -40,7 +40,7 @@ export const authUser = (user: any) => {
 
 export const authLogin = (dispatch: any, username: string, password: string) => {
     dispatch(authStart())
-    axios.post(`${SERVER_URL}/rest-auth/login/`, {
+    axios.post(`${SERVER_URL}/api/auth/login/`, {
         username: username,
         password: password,
     })

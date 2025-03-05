@@ -25,7 +25,7 @@ SECRET_KEY = 'q7-+g$-2x*n%aw(oy!-os9^ekm&*zexw2db!bauc(_=%jpvg+)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.1.104","192.168.56.1"]
+ALLOWED_HOSTS = ["192.168.1.104","192.168.56.1", 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -39,15 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # installed apps
+    'dj_rest_auth',
     'corsheaders',
     'channels',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth',
-    'rest_auth.registration',
+    # 'rest_auth',
+    # 'rest_auth.registration',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
 
     # user apps
     'chat',
@@ -67,6 +69,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'allauth.account.middleware.AccountMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 ROOT_URLCONF = 'django_chat.urls'
@@ -158,18 +166,22 @@ REST_FRAMEWORK = {
 }
 
 # channels
-ASGI_APPLICATION = 'django_chat.routing.application'
+ASGI_APPLICATION = "django_chat.asgi.application"
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # cors headers origin
 
 # CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://192.168.1.104:8000",

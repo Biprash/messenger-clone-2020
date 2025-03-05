@@ -8,7 +8,7 @@ from chat.models import Group, Participant, Message
 from chat.utils import get_user, get_groupId, last_25_messages
 
 
-class ChatComsumer(WebsocketConsumer):
+class ChatConsumer(WebsocketConsumer):
 
     def fetch_messages(self, data):
         messages = last_25_messages(data['groupName'])
