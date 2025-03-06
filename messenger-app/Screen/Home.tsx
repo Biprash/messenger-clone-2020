@@ -1,23 +1,35 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react'
+import React, { useLayoutEffect, useState, useEffect, FC } from 'react'
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useAuthValue } from '../store/AuthProvider'
 import axios from 'axios'
-import { HostUrl } from '../Settings'
+import { SERVER_URL } from '../Settings'
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../App';
 
-const Home = ({ navigation }) => {
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
+interface Props {
+  navigation: HomeScreenNavigationProp;
+}
+
+const Home: FC<Props> = ({ navigation }) => {
     const [{ token }] = useAuthValue()
-    const [friends, setFriends] = useState()
+    const [friends, setFriends] = useState<any[]>([])
 
     useEffect(() => {
         // console.log(props, 'effect')
-        axios.defaults.headers = {
-            "Content-Type": "application/json",
-            Authorization: `Token ${token}`
-        };
+        // axios.defaults.headers = {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Token ${token}`
+        // };
         axios
-            .get(`${HostUrl}/chat/api/contact/`)
+            .get(`${SERVER_URL}/chat/api/contact/`, {
+                headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${token}`,
+              }})
             .then(res => {
                 // console.log(res.data.friends)
                 setFriends(res.data.friends)
@@ -57,13 +69,13 @@ const Home = ({ navigation }) => {
                     return (
                         <TouchableOpacity key={index} onPress={() => navigation.navigate('Chat', friend)}>
                             <View style={styles.chat_item}>
-                                <Image style={styles.avatar} source={{uri:`${HostUrl}${friend.profile_pic}`}} />
+                                <Image style={styles.avatar} source={{uri:`${SERVER_URL}${friend.profile_pic}`}} />
                                 <View style={styles.chat_area}>
-                                    <Text style={styles.chat_username, styles.text_title}>{friend.username}</Text>
+                                    <Text style={[styles.text_title]}>{friend.username}</Text>
                                     <View style={styles.chat_messages}>
-                                        <Text style={styles.chat_message, styles.text}>You: Hlo K gardai hunu huncha</Text>
-                                        <Text style={styles.chat_timesplit, styles.text}> . </Text>
-                                        <Text style={styles.chat_time, styles.text}>12:00 PM</Text>
+                                        <Text style={[styles.text]}>You: Hlo K gardai hunu huncha</Text>
+                                        <Text style={[styles.text]}> . </Text>
+                                        <Text style={[styles.text]}>12:00 PM</Text>
                                     </View>
                                 </View>
                             </View>

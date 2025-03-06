@@ -10,7 +10,12 @@ import Home from './Screen/Home';
 import Chat from './Screen/Chat';
 import SignIn from './Screen/SignIn';
 
-const Stack = createStackNavigator()
+export type RootStackParamList = {
+  Home: undefined;  // Home screen doesn't require parameters
+  Chat: any; // Chat screen expects an id parameter
+};
+
+const Stack = createStackNavigator<RootStackParamList>()
 
 export default function App() {
   const [{token},dispatch] = useAuthValue()
@@ -18,7 +23,7 @@ export default function App() {
     <View style={styles.container}>
       {token ?
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="Home">
             <Stack.Screen 
               name="Home" 
               component={Home} 
@@ -26,7 +31,7 @@ export default function App() {
             <Stack.Screen 
               name="Chat" 
               component={Chat} 
-              options={{title:'Shubham Parajuli'}} />
+              options={{title:'Chat'}} />
           </Stack.Navigator>
         </NavigationContainer>
       :
@@ -40,7 +45,7 @@ export default function App() {
 // const STATUS_BAR = StatusBar.statusBarHeight || 24; 
 const screenHeight = Dimensions.get('screen').height;
 const windowHeight = Dimensions.get('window').height;
-const navbarHeight = screenHeight - windowHeight - SB.currentHeight;
+const navbarHeight = screenHeight - windowHeight - (SB?.currentHeight || 0);
 
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as actionTypes from './ActionsTypes'
-import { HostUrl } from '../../Settings'
+import { SERVER_URL } from '../../Settings'
 
 export const authStart = () => {
     return {
@@ -8,7 +8,7 @@ export const authStart = () => {
     }
 }
 
-export const authSuccess = (username, token) => {
+export const authSuccess = (username: string, token: string) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         username: username,
@@ -16,7 +16,7 @@ export const authSuccess = (username, token) => {
     }
 }
 
-export const authFail = (error) => {
+export const authFail = (error: any) => {
     return {
         type: actionTypes.AUTH_FAIL,
         error: error,
@@ -30,16 +30,16 @@ export const logout = () => {
     }
 }
 
-export const authUser = (user) => {
+export const authUser = (user: any) => {
     return {
         type: actionTypes.AUTH_USER,
         user: user,
     }
 }
 
-export const authLogin = (dispatch, username, password) => {
+export const authLogin = (dispatch: any, username: string, password: string) => {
     dispatch(authStart())
-    axios.post(`${HostUrl}/rest-auth/login/`, {
+    axios.post(`${SERVER_URL}/api/auth/login/`, {
         username: username,
         password: password,
     })
@@ -87,8 +87,8 @@ export const authLogin = (dispatch, username, password) => {
 //     }
 // }
 
-export const getUser = (dispatch, username, token) => {
-    axios.post(`${HostUrl}/chat/api/getuser/`, {
+export const getUser = (dispatch: any, username: string, token: string) => {
+    axios.post(`${SERVER_URL}/chat/api/getuser/`, {
         username: username,
     })
         .then(res => {

@@ -8,7 +8,7 @@ const SignIn = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = (e) => { 
+    const handleSubmit = () => { 
         authLogin(dispatch, username, password);
         setUsername('')
         setPassword('')
@@ -20,7 +20,7 @@ const SignIn = () => {
             {/* <Text style={styles.label}>Username</Text> */}
             <TextInput placeholder="Username" value={username} onChangeText={text => setUsername(text)} autoFocus={true} textContentType="username" autoCapitalize="none" style={styles.input} />
             {/* <Text style={styles.label}>Password</Text> */}
-            <TextInput placeholder="Password" value={password} onChangeText={text => setPassword(text)} autoCompleteType="off" secureTextEntry={true} textContentType="password" style={styles.input} />
+            <TextInput placeholder="Password" value={password} onChangeText={text => setPassword(text)} autoComplete="off" secureTextEntry={true} textContentType="password" style={styles.input} />
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.btnText}>Sign In</Text>
             </TouchableOpacity>

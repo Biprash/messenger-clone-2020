@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { useAuthValue } from '../store/AuthProvider'
-import {HostUrl} from '../Settings'
+import {SERVER_URL} from '../Settings'
 
 const Message = ({messages, user}) => {
     const [{username}] = useAuthValue()
@@ -13,7 +13,7 @@ const Message = ({messages, user}) => {
                 <View key={message.id}>
                     {username != message.sender?
                         <View style={styles.received}>
-                            <Image style={styles.avatar} source={{uri: `${HostUrl}${user.profile_pic}`}} />
+                            <Image style={styles.avatar} source={{uri: `${SERVER_URL}${user.profile_pic}`}} />
                             <View style={styles.messageList}>
                                 <Text style={styles.receivedMsg}>{message.message}</Text>
                                 {/* <Text style={styles.receivedMsg}>How are you? dsfskaffasdlh</Text>

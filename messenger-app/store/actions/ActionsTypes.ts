@@ -13,3 +13,4 @@ export type AuthAction =
   | { type: typeof AUTH_FAIL; payload: any }
   | { type: typeof AUTH_LOGOUT }
   | { type: typeof AUTH_USER; payload: any };
+  

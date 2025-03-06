@@ -1,10 +1,11 @@
-import { SocketUrl } from './Settings'
+import { SOCKET_URL } from './Settings'
 
 class WebsocketService {
 
-    static instance = null
+    static instance: WebsocketService | null = null
+    socketRef: WebSocket | null = null;
 
-    callbacks = {}
+    callbacks: any = {}
 
     static getInstance() {
         if(!WebsocketService.instance) {
@@ -17,8 +18,8 @@ class WebsocketService {
         this.socketRef = null
     }
 
-    connect(chatUrl, token) {
-        const path = `${SocketUrl}/ws/chat/${chatUrl}/${token}/`
+    connect(chatUrl: string, token: string) {
+        const path = `${SOCKET_URL}/ws/chat/${chatUrl}/${token}/`
         this.socketRef = new WebSocket(path)
         this.socketRef.onopen = () => {
 
@@ -30,15 +31,15 @@ class WebsocketService {
             console.error(e)
         }
         this.socketRef.onclose = () => {
-            console.error(e, 'Chat socket closed unexpectly')
+            console.error('Chat socket closed unexpectly')
         }
     }
 
     disconnect() {
-        this.socketRef.close()
+        this.socketRef?.close()
     }
 
-    socketNewMessage(data) {
+    socketNewMessage(data: any) {
         const ParsedData = JSON.parse(data)
         const command = ParsedData.command
 
@@ -50,7 +51,7 @@ class WebsocketService {
         }
     }
 
-    fetchMessage(username, roomName) {
+    fetchMessages(username: string, roomName: string) {
         this.sendMessage({
             command: 'fetch_messages',
             username: username,
@@ -58,7 +59,7 @@ class WebsocketService {
         })
     }
 
-    newChatMessage(message, username, roomName) {
+    newChatMessage(message: string, username: string, roomName: string) {
         this.sendMessage({
             command: 'new_message',
             message: message,
@@ -67,21 +68,21 @@ class WebsocketService {
         })
     }
 
-    addCallbacks(messagesCallback, newMessageCallback) {
+    addCallbacks(messagesCallback: (message: any) => void, newMessageCallback: (message: any) => void) {
         this.callbacks['messages'] = messagesCallback
         this.callbacks['new_message'] = newMessageCallback
     }
 
-    sendMessage(data) {
+    sendMessage(data: any) {
         try {
-            this.socketRef.send(JSON.stringify(data))
-        } catch {
-            console.log(err.message)
+            this.socketRef?.send(JSON.stringify(data))
+        } catch (err) {
+            console.log((err as Error).message)
         }
     }
 
     state() {
-        return this.socketRef.readyState
+        return this.socketRef?.readyState
     }
 }
 

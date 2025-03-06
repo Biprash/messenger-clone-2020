@@ -1,4 +1,4 @@
 start server using
 `
-daphne django_chat.asgi:application
+daphne -b 0.0.0.0 -p 8000 django_chat.asgi:application
 `

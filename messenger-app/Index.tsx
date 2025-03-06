@@ -1,8 +1,8 @@
 import { registerRootComponent } from 'expo';
 import React from 'react'
 import App from './App';
-import { AuthProvider } from './store/AuthProvider'
-import reducer, { initialState } from './store/reducers/Auth'
+import reducer, { initialState } from './store/reducers/auth';
+import { AuthProvider } from './store/AuthProvider';
 
 const Index = () => {
     return (

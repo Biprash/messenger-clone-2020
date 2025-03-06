@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, Image, View } from 'react-native'
+import { ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,15 +7,26 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Message from '../components/Message';
 import { useAuthValue } from '../store/AuthProvider'
-import { HostUrl, SocketUrl } from '../Settings'
+import { SERVER_URL } from '../Settings'
 import WebSocketInstance from '../Websocket'
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../App';
+import { RouteProp } from '@react-navigation/native';
 
-const Chat = ({ route, navigation }) => {
+type ChatScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Chat'>;
+type ChatScreenRouteProp = RouteProp<RootStackParamList, 'Chat'>;
+
+interface Props {
+  route: ChatScreenRouteProp;
+  navigation: ChatScreenNavigationProp;
+}
+
+const Chat:React.FC<Props> = ({ route, navigation }) => {
     const [{username, token}] = useAuthValue()
     const [message, setMessage] = useState('')
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState<any[]>([])
     const [send, setSend] = useState(false)
-    const user = route.params
+    const user = route.params || {}
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -24,7 +35,7 @@ const Chat = ({ route, navigation }) => {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
-                <Image style={styles.profile} source={{uri: `${HostUrl}${user.profile_pic}`}} />
+                <Image style={styles.profile} source={{uri: `${SERVER_URL}${user.profile_pic}`}} />
             </View>
             ),
             headerRight: () => (
@@ -48,7 +59,7 @@ const Chat = ({ route, navigation }) => {
         waitForSocketConnection(() => {
             WebSocketInstance.addCallbacks(setTheMessages, addMessage)
             console.log('yeskj')
-            WebSocketInstance.fetchMessage(
+            WebSocketInstance.fetchMessages(
                 username,
                 user.group_name
             )
@@ -56,7 +67,7 @@ const Chat = ({ route, navigation }) => {
         WebSocketInstance.connect(user.group_name,token)
     }
     
-    const waitForSocketConnection = (callback) => {
+    const waitForSocketConnection = (callback: any) => {
         setTimeout(
             () => {
                 console.log('lkfjsa');
@@ -72,10 +83,10 @@ const Chat = ({ route, navigation }) => {
         )
     }
 
-    const setTheMessages = (messages) => {
+    const setTheMessages = (messages: any[]) => {
         setMessages([...messages.reverse()])
     }
-    const addMessage = (message) => {
+    const addMessage = (message: any) => {
         setMessages(messages => [...messages,message])
         return
     }
@@ -125,7 +136,7 @@ const Chat = ({ route, navigation }) => {
                     </View>
                     {send?
                     <TouchableOpacity onPress={handleSubmit}>
-                        <Ionicons style={styles.icon} name="ios-send" size={24} />
+                        <Ionicons style={styles.icon} name="send" size={24} />
                     </TouchableOpacity>
                     :
                     <TouchableOpacity>

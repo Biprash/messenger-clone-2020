@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionsTypes'
 import { updateObject } from '../utility'
 
-interface InitialState {
+export interface AuthState {
     user: any
     token: string
     username: string
@@ -9,7 +9,9 @@ interface InitialState {
     loading: boolean
 } 
 
-export const initialState: InitialState = {
+export type AuthReducer = (state: AuthState, action: actionTypes.AuthAction) => AuthState;
+
+export const initialState: AuthState = {
     user: null,
     token: '',
     username: '',
@@ -17,14 +19,14 @@ export const initialState: InitialState = {
     loading: false
 }
 
-const authStart = (state: InitialState, action: any) => {
+const authStart = (state: AuthState, action: any) => {
     return updateObject(state, {
         error: null,
         loading: true
     })
 }
 
-const authSuccess = (state: InitialState, action: any) => {
+const authSuccess = (state: AuthState, action: any) => {
     return updateObject(state, {
         error: null,
         token: action.token,
@@ -33,14 +35,14 @@ const authSuccess = (state: InitialState, action: any) => {
     })
 }
 
-const authFail = (state: InitialState, action: any) => {
+const authFail = (state: AuthState, action: any) => {
     return updateObject(state, {
         error: action.error,
         loading: false
     })
 }
 
-const authLogout = (state: InitialState, action: any) => {
+const authLogout = (state: AuthState, action: any) => {
     return updateObject(state, {
         user: null,
         error: null,
@@ -50,13 +52,13 @@ const authLogout = (state: InitialState, action: any) => {
     })
 }
 
-const authUser = (state: InitialState, action: any) => {
+const authUser = (state: AuthState, action: any) => {
     return updateObject(state, {
         user: action.user
     })
 }
 
-const reducer = (state = initialState, action: any) => {
+const reducer: AuthReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case actionTypes.AUTH_START:
             return authStart(state, action)
