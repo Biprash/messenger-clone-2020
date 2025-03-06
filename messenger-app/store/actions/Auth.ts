@@ -1,0 +1,104 @@
+import axios from 'axios'
+import * as actionTypes from './ActionsTypes'
+import { SERVER_URL } from '../../Settings'
+
+export const authStart = () => {
+    return {
+        type: actionTypes.AUTH_START
+    }
+}
+
+export const authSuccess = (username: string, token: string) => {
+    return {
+        type: actionTypes.AUTH_SUCCESS,
+        username: username,
+        token: token,
+    }
+}
+
+export const authFail = (error: any) => {
+    return {
+        type: actionTypes.AUTH_FAIL,
+        error: error,
+    }
+}
+
+export const logout = () => {
+    // remove from async storage
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
+export const authUser = (user: any) => {
+    return {
+        type: actionTypes.AUTH_USER,
+        user: user,
+    }
+}
+
+export const authLogin = (dispatch: any, username: string, password: string) => {
+    dispatch(authStart())
+    axios.post(`${SERVER_URL}/api/auth/login/`, {
+        username: username,
+        password: password,
+    })
+        .then(res => {
+            // console.log(res, 'res');
+            const token = res.data.key
+            getUser(dispatch, username, token)
+        })
+        .catch(err => {
+            console.log(err, 'err');
+            dispatch(authFail(err))
+        })
+}
+
+// export const authSignUp = (username, email, password1, password2) => {
+//     return dispatch => {
+//         dispatch(authStart())
+//         axios.post('url', {
+//             username: username,
+//             email: email,
+//             password1: password1,
+//             password2: password2,
+//         })
+//             .then(res => {
+//                 const token = res.data.token
+//                 localStorage.setItem('token', token)
+//                 localStorage.setItem('username', username)
+//                 dispatch(authSuccess(username, token))
+//             })
+//             .catch(err => {
+//                 dispatch(authFail(err))
+//             })
+//     }
+// }
+
+// export const authCheckState = () => {
+//     return dispatch => {
+//         const token = localStorage.getItem('token')
+//         const username = localStorage.getItem('username')
+//         if (token === undefined || username === undefined) {
+//             dispatch(logout())
+//         } else {
+//             dispatch(authSuccess(username, token))
+//         }
+//     }
+// }
+
+export const getUser = (dispatch: any, username: string, token: string) => {
+    axios.post(`${SERVER_URL}/chat/api/getuser/`, {
+        username: username,
+    })
+        .then(res => {
+            // console.log(res.data, 'res get');
+            const user = res.data
+            dispatch(authUser(user))
+            dispatch(authSuccess(username, token))
+        })
+        .catch(err => {
+            console.log(err, 'err');
+            // dispatch(authFail(err))
+        })
+}
